@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxy.mapper.StudentMapper">
+
+    <select id="list" resultType="com.lxy.pojo.Student">
+        select s.*, c.name as clazzName
+        from student s left join clazz c on s.clazz_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                s.name like concat('%',#{name},'%')
+            </if>
+            <if test="gender != null">
+                and s.gender = #{gender}
+            </if>
+            <if test="begin != null and end != null">
+                and s.entry_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by s.update_time desc
+    </select>
+
+    <select id="getById" resultType="com.lxy.pojo.Student">
+        select s.*, c.name as clazzName
+        from student s left join clazz c on s.clazz_id = c.id
+        where s.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into student(name, gender, phone, degree, clazz_id, entry_date, graduation_date, id_card, image, create_time, update_time)
+        values (#{name}, #{gender}, #{phone}, #{degree}, #{clazzId}, #{entryDate}, #{graduationDate}, #{idCard}, #{image}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update">
+        update student
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="degree != null and degree != ''">degree = #{degree},</if>
+            <if test="clazzId != null">clazz_id = #{clazzId},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="graduationDate != null">graduation_date = #{graduationDate},</if>
+            <if test="idCard != null and idCard != ''">id_card = #{idCard},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByIds">
+        delete from student where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="countStuClazzData" resultType="java.util.Map">
+        select c.name, count(s.id) as count
+        from clazz c left join student s on c.id = s.clazz_id
+        group by c.id, c.name
+        order by count desc
+    </select>
+
+</mapper>
