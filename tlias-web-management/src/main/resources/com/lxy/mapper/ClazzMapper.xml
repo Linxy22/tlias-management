@@ -19,14 +19,15 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into clazz(name, begin_date, end_date, create_time, update_time)
-        values (#{name}, #{beginDate}, #{endDate}, #{createTime}, #{updateTime})
+        insert into clazz(name, subject, begin_date, end_date, create_time, update_time)
+        values (#{name}, #{subject}, #{beginDate}, #{endDate}, #{createTime}, #{updateTime})
     </insert>
 
     <update id="update">
         update clazz
         <set>
             <if test="name != null and name != ''">name = #{name},</if>
+            <if test="subject != null and subject != ''">subject = #{subject},</if>
             <if test="beginDate != null">begin_date = #{beginDate},</if>
             <if test="endDate != null">end_date = #{endDate},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>

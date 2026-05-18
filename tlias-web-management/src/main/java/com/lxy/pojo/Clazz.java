@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Clazz {
     private Integer id;
     private String name;
+    private String subject;
     private LocalDate beginDate;
     private LocalDate endDate;
     private LocalDateTime createTime;

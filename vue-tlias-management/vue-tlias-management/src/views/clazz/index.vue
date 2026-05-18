@@ -22,7 +22,7 @@ const queryParams = ref({ page: 1, pageSize: 10, name: "" });
 // 弹窗相关
 const dialogVisible = ref(false);
 const dialogTitle = ref("新增班级");
-const clazzForm = ref({ id: null, name: "", beginDate: "", endDate: "" });
+const clazzForm = ref({ id: null, name: "", subject: "", beginDate: "", endDate: "" });
 
 // 查询班级列表
 const queryPage = async () => {
@@ -57,7 +57,7 @@ const handlePageChange = (page) => {
 // 新增
 const handleAdd = () => {
   dialogTitle.value = "新增班级";
-  clazzForm.value = { id: null, name: "", beginDate: "", endDate: "" };
+  clazzForm.value = { id: null, name: "", subject: "", beginDate: "", endDate: "" };
   dialogVisible.value = true;
 };
 
@@ -140,6 +140,7 @@ onMounted(() => {
   <el-table :data="clazzList" border style="width: 100%">
     <el-table-column type="index" label="序号" width="80" align="center" />
     <el-table-column prop="name" label="班级名称" align="center" />
+    <el-table-column prop="subject" label="学科" width="150" align="center" />
     <el-table-column
       prop="beginDate"
       label="开始日期"
@@ -193,6 +194,9 @@ onMounted(() => {
     <el-form :model="clazzForm" label-width="100px">
       <el-form-item label="班级名称">
         <el-input v-model="clazzForm.name" placeholder="请输入班级名称" />
+      </el-form-item>
+      <el-form-item label="学科">
+        <el-input v-model="clazzForm.subject" placeholder="请输入学科" />
       </el-form-item>
       <el-form-item label="开始日期">
         <el-date-picker
