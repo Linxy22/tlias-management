@@ -1,0 +1,30 @@
+#配置数据库连接信息
+
+spring:
+  application:
+    name: tlias-web-management
+  #mysql连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tlias
+    username: root
+    password: 1234
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+    #mybatis配置
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #打开了驼峰命名映射的开关
+    map-underscore-to-camel-case: true
+
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: java-ai12343
+    region: cn-beijing
+    access-key-id: ${OSS_ACCESS_KEY_ID}
+    access-key-secret: ${OSS_ACCESS_KEY_SECRET}
